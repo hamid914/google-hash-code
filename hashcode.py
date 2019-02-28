@@ -80,6 +80,7 @@ def optimizer(final_processed):
         sld = output[-1]
         tags = sld[2]
         max_intr = -1
+        max_poss = max_possible_intrested(sld)
         for j in range(len(sorted_slds)):
             if done[j]:
                 continue
@@ -92,7 +93,7 @@ def optimizer(final_processed):
                 max_intr = intr
                 best_match = j
 
-            if intr == max_possible_intrested(sld, other_sld):
+            if intr == max_poss:
                 break
 
         done[j] = 1
@@ -102,9 +103,9 @@ def optimizer(final_processed):
 
 def max_possible_intrested(s1, s2):
     '''
-        calculates max possible score between two given slides
+        calculates max possible score for one slide
     '''
-    return min(len(s1), len(s2)) / 2
+    return len(s1) / 2
 
 def main(input_file):
     # Reads input

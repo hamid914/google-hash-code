@@ -60,11 +60,12 @@ def vertical_merger(in_processed):
             verticals.append(image)
         else:
             horizontals.append(image)
-    #verticals = sorted(verticals, key=lambda x: len(x[2]))
-    for i in range(0, len(verticals) - 1, 2):
+    verticals = sorted(verticals, key=lambda x: len(x[2]))
+    length = len(verticals)
+    for i in range(0, length / 2):
         t1 = verticals[i][2]
-        t2 = verticals[i + 1][2]
-        horizontals.append([verticals[i][0] + verticals[i + 1][0], 'H', t1.union(t2)])
+        t2 = verticals[length - i - 1][2]
+        horizontals.append([verticals[i][0] + verticals[length - i - 1][0], 'H', t1.union(t2)])
     return horizontals
 
 def optimizer(final_processed):

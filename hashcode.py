@@ -48,11 +48,10 @@ def vertical_merger(in_processed):
             verticals.append(image)
         else:
             horizontals.append(image)
-        if len(verticals) > 1:
-            t1 = set(verticals[0][2])
-            t2 = set(verticals[1][2])
-            horizontals.append([verticals[0][0] + verticals[1][0], 'H', list(t1.union(t2))])
-            del verticals[:]
+    for i in range(0, len(verticals) - 1, 2):
+        t1 = set(verticals[i][2])
+        t2 = set(verticals[i + 1][2])
+        horizontals.append([verticals[i][0] + verticals[i + 1][0], 'H', list(t1.union(t2))])
     return horizontals
 
 def optimizer(final_processed):

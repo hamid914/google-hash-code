@@ -18,6 +18,12 @@ def read_input(input_file):
         input_touple.append(([i], alignment, tags))
     return images_num, input_touple
 
+
+def interested(s1, s2):
+    t1 = set(s1[2])
+    t2 = set(s2[2])
+    return min(len(t1-t2), len(t2-t1), len(t1.union(t2)))
+
 def score(sol):
     pass
 

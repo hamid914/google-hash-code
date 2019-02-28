@@ -91,7 +91,7 @@ def main(input_file):
     # Reads input
     if os.path.exists(input_file):
         img_num, in_processed = read_input(input_file)
-        print img_num, in_processed
+        #print img_num, in_processed
     else:
         print "File does not exists"
 
@@ -113,4 +113,5 @@ def main(input_file):
     
 
 if __name__ == "__main__":
-    main('a_example.txt')
+    import sys
+    main(sys.argv[1])

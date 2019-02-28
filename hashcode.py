@@ -22,19 +22,37 @@ def read_input(input_file):
 def interested(s1, s2):
     t1 = set(s1[2])
     t2 = set(s2[2])
-    return min(len(t1-t2), len(t2-t1), len(t1.union(t2)))
+    return min(len(t1-t2), len(t2-t1), len(t1.intersection(t2)))
 
 def score(sol):
     total_score = 0
     for i in xrange(len(sol) - 1):
         total_score += interested(sol[i], sol[i+1])
+        print i, interested(sol[i], sol[i+1])
     return total_score
 
 def generate_output(sol, input_file):
-    pass
+    num_slides = len(sol)
+    with open(input_file+'.out', 'w') as f:
+        f.write(str(num_slides))
+        f.write('\n')
+        for slide in sol:
+            f.write(' '.join([str(s) for s in slide[0]]))
+            f.write('\n')
 
 def vertical_merger(in_processed):
-    pass
+    verticals = []
+    horizontals = []
+    for image in in_processed:
+        if image[1] == 'V':
+            verticals.append(image)
+        else:
+            horizontals.append(image)
+    for i in range(0, len(verticals) - 1, 2):
+        t1 = set(verticals[i][2])
+        t2 = set(verticals[i + 1][2])
+        horizontals.append([verticals[i][0] + verticals[i + 1][0], 'H', list(t1.union(t2))])
+    return horizontals
 
 def optimizer(final_processed):
     sorted_slds = sorted(final_processed, key=lambda s: len(s[2]))
@@ -77,21 +95,20 @@ def main(input_file):
     else:
         print "File does not exists"
 
-    # (id, 'H' or 'V', [tags])
+    # ([id], 'H' or 'V', [tags])
 
     # merge verticals
     final_processed = vertical_merger(in_processed)
 
     # preform solution
-    # output format is [[id], [id,id], [id], ...]
+    # [([id], 'H' or 'V', [tags])]
     sol = optimizer(final_processed)
-
-    # score our solution
     
-    score(sol)
-
+    # score our solution
+    s = score(sol)
+    print "Score is:\t{}".format(s)
+    
     # generate output
-    #sol = [[0], [1,2], [3]]
     generate_output(sol, input_file)
     
 

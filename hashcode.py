@@ -48,6 +48,7 @@ def vertical_merger(in_processed):
             verticals.append(image)
         else:
             horizontals.append(image)
+    verticals = sorted(verticals, key=lambda x: len(x[2]))
     for i in range(0, len(verticals) - 1, 2):
         t1 = set(verticals[i][2])
         t2 = set(verticals[i + 1][2])

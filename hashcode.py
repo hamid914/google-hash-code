@@ -28,7 +28,13 @@ def score(sol):
     pass
 
 def generate_output(sol, input_file):
-    pass
+    num_slides = len(sol)
+    with open(input_file+'.out', 'w') as f:
+        f.write(num_slides)
+        f.write('\n')
+        for slide in sol:
+            f.write(' '.join([str(s) for s in slide[0]]))
+            f.write('\n')
 
 def vertical_merger(in_processed):
     pass
@@ -44,13 +50,13 @@ def main(input_file):
     else:
         print "File does not exists"
 
-    # (id, 'H' or 'V', [tags])
+    # ([id], 'H' or 'V', [tags])
 
     # merge verticals
     final_processed = vertical_merger(in_processed)
 
     # preform solution
-    # output format is [[id], [id,id], [id], ...]
+    # [([id], 'H' or 'V', [tags])]
     sol = optimizer(final_processed)
 
     # score our solution
@@ -58,7 +64,6 @@ def main(input_file):
     score(sol)
 
     # generate output
-    #sol = [[0], [1,2], [3]]
     generate_output(sol, input_file)
     
 

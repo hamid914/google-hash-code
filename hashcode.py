@@ -25,7 +25,10 @@ def interested(s1, s2):
     return min(len(t1-t2), len(t2-t1), len(t1.union(t2)))
 
 def score(sol):
-    pass
+    total_score = 0
+    for i in xrange(len(sol) - 1):
+        total_score += interested(sol[i], sol[i+1])
+    return total_score
 
 def generate_output(sol, input_file):
     num_slides = len(sol)
@@ -40,7 +43,8 @@ def vertical_merger(in_processed):
     pass
 
 def optimizer(final_processed):
-    pass
+    opt_processed = sorted(final_processed, key=lambda s: len(s[2]))
+    return opt_processed
 
 def main(input_file):
     # Reads input

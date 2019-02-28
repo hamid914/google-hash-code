@@ -56,14 +56,43 @@ def vertical_merger(in_processed):
     return horizontals
 
 def optimizer(final_processed):
-    opt_processed = sorted(final_processed, key=lambda s: len(s[2]))
-    return opt_processed
+    sorted_slds = sorted(final_processed, key=lambda s: len(s[2]))
+    done = [0] * len(sorted_slds)
+    done[0] = 1
+    output = [sorted_slds[0]]
+
+    for _ in range(1, len(sorted_slds)):
+        sld = output[-1]
+        tags = sld[2]
+        max_intr = -1
+        for j in range(len(sorted_slds)):
+            if done[j]:
+                continue
+
+            other_sld = sorted_slds[j]
+            other_tags = other_sld[2]
+
+            intr = interested(sld, other_sld)
+            if intr > max_intr:
+                max_intr = intr
+                best_match = j
+
+            if intr == max_possible_intrested(sld, other_sld):
+                break
+
+        done[j] = 1
+        output.append(sorted_slds[j])
+    
+    return output
+
+def max_possible_intrested(s1, s2):
+    return min(len(s1), len(s2)) / 2
 
 def main(input_file):
     # Reads input
     if os.path.exists(input_file):
         img_num, in_processed = read_input(input_file)
-        print img_num, in_processed
+        #print img_num, in_processed
     else:
         print "File does not exists"
 
@@ -85,4 +114,5 @@ def main(input_file):
     
 
 if __name__ == "__main__":
-    main('a_example.txt')
+    import sys
+    main(sys.argv[1])

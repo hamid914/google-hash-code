@@ -31,7 +31,20 @@ def generate_output(sol, input_file):
     pass
 
 def vertical_merger(in_processed):
-    pass
+    verticals = []
+    horizontals = []
+    for image in in_processed:
+        if image[1] == 'V':
+            verticals.append(image)
+        else:
+            horizontals.append(image)
+        if len(verticals) > 1:
+            t1 = set(verticals[0][2])
+            t2 = set(verticals[1][2])
+            horizontals.append([verticals[0][0] + verticals[1][0], 'H', list(t1.union(t2))])
+            del verticals[:]
+    return horizontals
+
 
 def optimizer(final_processed):
     pass
